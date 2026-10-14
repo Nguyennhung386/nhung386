@@ -78,10 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SnapTik — Tải Video TikTok" },
+      { title: "SaveTok — Tải Video TikTok" },
       { name: "description", content: "Giao diện tải video, ảnh và nhạc TikTok." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "SnapTik — Tải Video TikTok" },
+      { property: "og:title", content: "SaveTok — Tải Video TikTok" },
       { property: "og:description", content: "Giao diện tải video, ảnh và nhạc TikTok." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
