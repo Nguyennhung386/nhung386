@@ -11,4 +11,4 @@
 
 ## Application conventions
 - Keep the SaveTok interface at the index route with its design tokens and responsive styles in the global stylesheet, so the reference layout stays consistent.
-- The download form only validates links until a real processing service is connected; never imply a file was downloaded without receiving one.
+- The download form posts to the download service (`services/download_api.py`): via the Vite `/api/dl` proxy in dev, or `VITE_DOWNLOAD_API_URL` in production (see `services/README.md`). Only report success after a file is actually returned.

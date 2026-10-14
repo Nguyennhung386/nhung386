@@ -53,7 +53,11 @@
 .intro-description { max-width: 850px; margin: 0 auto; color: var(--muted-foreground); font-size: 14px; line-height: 1.9; }
 .inline-link { color: var(--primary); }
 .online-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--info); color: var(--primary-foreground); border-radius: 5px; padding: 1px 6px; font-size: 11px; font-weight: 800; line-height: 1.5; }
-.download-form { display: flex; max-width: 680px; height: 62px; margin: 28px auto 0; padding: 4px; border: 1px solid var(--primary); border-radius: 34px; box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 12%, transparent); }
+.format-toggle { display: flex; justify-content: center; gap: 8px; margin: 24px auto 0; }
+.format-toggle button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 20px; padding: 7px 16px; background: transparent; color: var(--muted-foreground); font-size: 12px; font-weight: 800; cursor: pointer; }
+.format-toggle button.active { border-color: var(--primary); background: var(--secondary); color: var(--primary); }
+.format-toggle button:disabled { cursor: not-allowed; opacity: .6; }
+.download-form { display: flex; max-width: 680px; height: 62px; margin: 14px auto 0; padding: 4px; border: 1px solid var(--primary); border-radius: 34px; box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 12%, transparent); }
 .link-field { flex: 1; display: flex; align-items: center; gap: 12px; padding: 0 15px; min-width: 0; color: var(--muted-foreground); }
 .link-field input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--foreground); font-size: 14px; }
 .link-field input::placeholder { color: var(--muted-foreground); opacity: 1; }
