@@ -24,6 +24,7 @@
   --radius-lg: 8px;
 }
 :root {
+ color-scheme: dark;
  --background: oklch(.31 .09 256.6); --foreground: oklch(.985 .006 250);
  --primary: oklch(.853 .163 85.2); --primary-foreground: oklch(.31 .09 256.6);
  --secondary: oklch(.38 .085 256); --muted: oklch(.36 .06 256);
