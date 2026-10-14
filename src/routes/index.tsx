@@ -62,13 +62,13 @@ function Index() {
   }
   return <>
     <header className="site-header"><div className="header-inner">
-      <a href="/" className="wordmark" aria-label="SaveTok trang chủ">SAVATOK</a>
+      <a href="/" className="wordmark" aria-label="SaveTok trang chủ">SAVETOK</a>
       <div className="flex items-center gap-2 text-muted-foreground"><Globe size={14}/><select aria-label="Ngôn ngữ" className="language-select" value={language} onChange={e => setLanguage(e.target.value)}><option value="vi">Tiếng Việt</option><option value="en">English</option></select></div>
     </div></header>
     <main className="main-content">
       <section className="intro">
         <h1>{english ? <>SaveTok - TikTok Video Downloader,<br/>Download TikTok Music</> : <>SaveTok - Tải Video TikTok Không Logo,<br/>Tải Nhạc TikTok Miễn Phí</>}</h1>
-        <p className="intro-description">{english ? 'Download TikTok videos without a watermark with SaveTok. MP3 music and HD videos on your phone and computer, without installing an app.' : <>Tải video TikTok không logo, watermark với SaveTok. Hỗ trợ tải <a className="inline-link" href="#section-2"><Music2 size={12} className="inline"/> nhạc</a> MP3, video HD, 4K miễn phí trên điện thoại (iPhone, Android) và máy tính, không cần cài đặt.</>} {' '}<a href="#section-1" className="online-badge"><Video size={12}/>{english ? 'Online Video' : 'Dụng Video Online'}</a></p>
+        <p className="intro-description">{english ? 'Download TikTok videos without a watermark with SaveTok. MP3 music and HD videos on your phone and computer, without installing an app.' : <>Tải video TikTok không logo, watermark với SaveTok. Hỗ trợ tải <a className="inline-link" href="#section-2"><Music2 size={12} className="inline"/> nhạc</a> MP3, video HD, 4K miễn phí trên điện thoại (iPhone, Android) và máy tính, không cần cài đặt.</>} {' '}<a href="#section-1" className="online-badge"><Video size={12}/>{english ? 'Online Video' : 'Dùng Video Online'}</a></p>
         <div className="format-toggle" role="radiogroup" aria-label={english ? 'Download format' : 'Định dạng tải'}>
           {([['mp4', <Video size={14}/>, english ? 'Video MP4' : 'Video MP4'], ['mp3', <Music2 size={14}/>, english ? 'Music MP3' : 'Nhạc MP3']] as const).map(([value, icon, label]) =>
             <button key={value} type="button" role="radio" aria-checked={format === value} className={format === value ? 'active' : ''} disabled={loading} onClick={() => setFormat(value)}>{icon}{label}</button>)}
@@ -79,8 +79,8 @@ function Index() {
         </form>
         {message && <p role="status" className={`form-message ${valid ? 'notice' : ''}`}>{message}</p>}
         <div className="browser-links">
-          <a className="browser-link" href="https://chromewebstore.google.com/search/savatok" target="_blank" rel="noreferrer"><ChromeMark/><span><small>SAVATOK</small>Chrome Web Store</span></a>
-          <a className="browser-link" href="https://addons.mozilla.org/vi/firefox/search/?q=savatok" target="_blank" rel="noreferrer"><span className="browser-symbol text-info flex items-center justify-center"><Globe size={30}/></span><span><small>SAVATOK</small>Firefox Add-ons</span></a>
+          <a className="browser-link" href="https://chromewebstore.google.com/search/savetok" target="_blank" rel="noreferrer"><ChromeMark/><span><small>SAVETOK</small>Chrome Web Store</span></a>
+          <a className="browser-link" href="https://addons.mozilla.org/vi/firefox/search/?q=savetok" target="_blank" rel="noreferrer"><span className="browser-symbol text-info flex items-center justify-center"><Globe size={30}/></span><span><small>SAVETOK</small>Firefox Add-ons</span></a>
         </div>
       </section>
       <aside className="disclaimer">Dịch vụ này không liên kết với ByteDance, TikTok hoặc Meta. Chúng tôi không lưu trữ video trên máy chủ của mình. Bằng cách sử dụng dịch vụ này, bạn đồng ý với <a href="#terms">Điều khoản sử dụng</a> của chúng tôi.</aside>
@@ -98,7 +98,7 @@ function Index() {
         <section id="terms"><h2>Điều khoản sử dụng</h2><p>Chỉ tải nội dung thuộc quyền sở hữu của bạn hoặc được tác giả cho phép. Không sử dụng nội dung để vi phạm bản quyền. SaveTok không liên kết với TikTok hoặc ByteDance.</p></section>
       </article>
     </main>
-    <footer className="footer"><a href="/" className="wordmark">SAVATOK</a><p>© {new Date().getFullYear()} SaveTok · <a href="#terms" className="inline-link">Điều khoản sử dụng</a></p></footer>
+    <footer className="footer"><a href="/" className="wordmark">SAVETOK</a><p>© {new Date().getFullYear()} SaveTok · <a href="#terms" className="inline-link">Điều khoản sử dụng</a></p></footer>
     {cookies && <aside className="cookie-notice" aria-label="Thông báo cookie"><p>Trang web sử dụng cookie để cải thiện trải nghiệm của bạn. Bằng cách tiếp tục, bạn đồng ý với <a href="#terms" className="inline-link underline">Điều khoản sử dụng</a> của chúng tôi.</p><Button className="cookie-accept" onClick={() => setCookies(false)}>Đồng ý</Button></aside>}
   </>;
 }
