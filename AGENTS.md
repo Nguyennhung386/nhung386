@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Application conventions
+- Keep the SnapTik interface at the index route with its design tokens and responsive styles in the global stylesheet, so the reference layout stays consistent.
+- The download form only validates links until a real processing service is connected; never imply a file was downloaded without receiving one.

@@ -1,24 +1,73 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router';
+import { useState, type FormEvent } from 'react';
+import { Clipboard, Download, Video, Music2, Check, Globe } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import banner from '@/assets/download-banner.jpg';
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute('/')({
+  head: () => ({ meta: [
+    { title: 'SnapTik — Tải Video TikTok Không Logo' },
+    { name: 'description', content: 'SnapTik: giao diện tải video, ảnh và nhạc TikTok bằng liên kết, hỗ trợ điện thoại và máy tính.' },
+    { property: 'og:title', content: 'SnapTik — Tải Video TikTok Không Logo' },
+    { property: 'og:description', content: 'Dán liên kết TikTok để bắt đầu. Giao diện tiếng Việt đơn giản, dễ sử dụng.' },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+  ] }),
   component: Index,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const sections = ['Cách tải video TikTok không logo', 'Tải ảnh và nhạc TikTok', 'Vì sao nên chọn', 'Thiết bị hỗ trợ', 'Về SnapTik', 'Câu hỏi thường gặp'];
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  const [url, setUrl] = useState('');
+  const [message, setMessage] = useState('');
+  const [valid, setValid] = useState(false);
+  const [cookies, setCookies] = useState(true);
+  const [language, setLanguage] = useState('vi');
+  const english = language === 'en';
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    let isTikTok = false;
+    try { const link = new URL(url.trim()); isTikTok = link.protocol === 'https:' && (link.hostname === 'tiktok.com' || link.hostname.endsWith('.tiktok.com')); } catch { /* Invalid links show inline feedback. */ }
+    setValid(isTikTok);
+    setMessage(isTikTok
+      ? (english ? 'Link received. Downloading is not connected to a video service yet.' : 'Đã nhận liên kết TikTok. Chức năng tải tệp chưa được kết nối với dịch vụ xử lý video.')
+      : (english ? 'Please enter a valid TikTok link (https://www.tiktok.com/…).' : 'Vui lòng dán liên kết TikTok hợp lệ (https://www.tiktok.com/…).'));
+  }
+  return <>
+    <header className="site-header"><div className="header-inner">
+      <a href="/" className="wordmark" aria-label="SnapTik trang chủ">SNAPTIK</a>
+      <div className="flex items-center gap-2 text-muted-foreground"><Globe size={14}/><select aria-label="Ngôn ngữ" className="language-select" value={language} onChange={e => setLanguage(e.target.value)}><option value="vi">Tiếng Việt</option><option value="en">English</option></select></div>
+    </div></header>
+    <main className="main-content">
+      <section className="intro">
+        <h1>{english ? <>SnapTik - TikTok Video Downloader,<br/>Download TikTok Photos & Music</> : <>SnapTik - Tải Video TikTok Không Logo,<br/>Tải Ảnh & Nhạc TikTok Miễn Phí</>}</h1>
+        <p className="intro-description">{english ? 'Download TikTok videos without a watermark with SnapTik. TikTok photos, MP3 music and HD videos on your phone and computer, without installing an app.' : <>Tải video TikTok không logo, watermark với SnapTik. Hỗ trợ tải ảnh TikTok, tải <a className="inline-link" href="#section-2"><Music2 size={12} className="inline"/> nhạc</a> MP3, lưu video Douyin HD, 4K miễn phí trên điện thoại (iPhone, Android) và máy tính, không cần cài đặt.</>} {' '}<a href="#section-1" className="online-badge"><Video size={12}/>{english ? 'Online Video' : 'Dụng Video Online'}</a></p>
+        <form className="download-form" onSubmit={submit}>
+          <label className="link-field"><Clipboard size={20} className="shrink-0"/><input aria-label="Liên kết TikTok" placeholder={english ? 'Paste your TikTok link here…' : 'Dán liên kết TikTok vào đây…'} value={url} onChange={e => {setUrl(e.target.value); setMessage('');}} /></label>
+          <Button type="submit" className="download-action"><Download size={17}/>{english ? 'DOWNLOAD' : 'TẢI XUỐNG'}</Button>
+        </form>
+        {message && <p role="status" className={`form-message ${valid ? 'notice' : ''}`}>{message}</p>}
+        <div className="browser-links">
+          <a className="browser-link" href="https://chromewebstore.google.com/search/snaptik" target="_blank" rel="noreferrer"><ChromeMark/><span><small>SNAPTIK</small>Chrome Web Store</span></a>
+          <a className="browser-link" href="https://addons.mozilla.org/vi/firefox/search/?q=snaptik" target="_blank" rel="noreferrer"><span className="browser-symbol text-info flex items-center justify-center"><Globe size={30}/></span><span><small>SNAPTIK</small>Firefox Add-ons</span></a>
+        </div>
+      </section>
+      <aside className="disclaimer">Dịch vụ này không liên kết với ByteDance, TikTok hoặc Meta. Chúng tôi không lưu trữ video trên máy chủ của mình. Bằng cách sử dụng dịch vụ này, bạn đồng ý với <a href="#terms">Điều khoản sử dụng</a> của chúng tôi.</aside>
+      <nav aria-label="Mục lục"><ol className="contents">{sections.map((section, i) => <li key={section}><a href={`#section-${i+1}`}>{i+1}. {section}</a></li>)}</ol></nav>
+      <figure className="m-0"><img className="banner" src={banner} alt="Tải video TikTok nhanh siêu cấp — 1 click, no watermark" width={1280} height={720}/><figcaption className="banner-caption">SnapTik - Công cụ xóa logo TikTok, tải video TikTok (Douyin) miễn phí chất lượng cao <span className="online-badge"><Video size={11}/>Video không logo</span></figcaption></figure>
+      <article className="article">
+        <p><strong>Để tải video TikTok không logo:</strong> sao chép link video, dán vào ô trên <strong>SnapTik</strong> rồi nhấn Tải xuống — file MP4 sạch watermark về máy trong vài giây. Miễn phí, không cài app, không đăng ký, không giới hạn số lượt tải.</p>
+        <p><strong>SnapTik</strong> <a href="#section-1" className="inline-link">tải video TikTok</a> và Douyin ở chất lượng HD, 4K, <a href="#section-2" className="inline-link">tải ảnh slideshow, tách nhạc MP3</a>, hoạt động trên điện thoại và máy tính. Quen tiếng Anh thì đây cũng là một <strong>TikTok Downloader</strong> — <a href="#section-1" className="inline-link">download</a> video no watermark.</p>
+        <section id="section-1"><h2>Cách tải video TikTok không logo</h2><div className="steps">{[['Sao chép liên kết', 'Mở TikTok, chọn video yêu thích. Nhấn Chia sẻ, sau đó chọn Sao chép liên kết.'], ['Dán liên kết', 'Dán liên kết video vào ô phía trên trang SnapTik.'], ['Tải video', 'Nhấn Tải xuống để bắt đầu xử lý liên kết video.']].map(([title, text], i) => <div className="step" key={title}><div className="step-title"><span className="step-number">{i+1}</span>{title}</div><p>{text}</p></div>)}</div></section>
+        <section id="section-2"><h2>Tải ảnh và nhạc TikTok</h2><p>Sao chép liên kết bài đăng ảnh hoặc video có âm thanh bạn yêu thích. Dán liên kết vào SnapTik để bắt đầu. Hãy tôn trọng quyền tác giả khi sử dụng nội dung tải về.</p></section>
+        <section id="section-3"><h2>Vì sao nên chọn SnapTik?</h2><ul className="feature-list">{['Giao diện đơn giản, dễ sử dụng', 'Không cần cài đặt ứng dụng', 'Dán liên kết ngay trên trình duyệt', 'Hỗ trợ điện thoại và máy tính'].map(item => <li key={item}><Check/>{item}</li>)}</ul></section>
+        <section id="section-4"><h2>Thiết bị hỗ trợ</h2><p>Truy cập SnapTik bằng Safari, Chrome, Firefox hoặc Edge trên iPhone, iPad, điện thoại Android, Windows và macOS.</p></section>
+        <section id="section-5"><h2>Về SnapTik</h2><p>SnapTik là giao diện công cụ tải nội dung TikTok qua liên kết. Phiên bản này chưa kết nối dịch vụ xử lý và tải tệp video.</p></section>
+        <section id="section-6" className="faq"><h2>Câu hỏi thường gặp</h2>{[['Tôi lấy liên kết video TikTok ở đâu?', 'Mở video trong TikTok, nhấn nút Chia sẻ rồi chọn Sao chép liên kết.'], ['Tôi có cần đăng nhập không?', 'Bạn không cần đăng nhập để dán và kiểm tra liên kết TikTok.'], ['Tại sao tôi chưa tải được video?', 'Phiên bản hiện tại mới có giao diện và kiểm tra liên kết. Dịch vụ tải video chưa được kết nối.']].map(([q,a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</section>
+        <section id="terms"><h2>Điều khoản sử dụng</h2><p>Chỉ tải nội dung thuộc quyền sở hữu của bạn hoặc được tác giả cho phép. Không sử dụng nội dung để vi phạm bản quyền. SnapTik không liên kết với TikTok hoặc ByteDance.</p></section>
+      </article>
+    </main>
+    <footer className="footer"><a href="/" className="wordmark">SNAPTIK</a><p>© {new Date().getFullYear()} SnapTik · <a href="#terms" className="inline-link">Điều khoản sử dụng</a></p></footer>
+    {cookies && <aside className="cookie-notice" aria-label="Thông báo cookie"><p>Trang web sử dụng cookie để cải thiện trải nghiệm của bạn. Bằng cách tiếp tục, bạn đồng ý với <a href="#terms" className="inline-link underline">Điều khoản sử dụng</a> của chúng tôi.</p><Button className="cookie-accept" onClick={() => setCookies(false)}>Đồng ý</Button></aside>}
+  </>;
 }
+function ChromeMark() { return <svg className="browser-symbol text-info" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="currentColor"/><circle cx="16" cy="16" r="6" stroke="var(--primary-foreground)" strokeWidth="1.5"/><path d="M16 10h13M11 19 5 8M19 21l-6 10" stroke="var(--primary-foreground)" strokeWidth="1.5"/></svg>; }
